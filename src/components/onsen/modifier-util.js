@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactElement from 'react/lib/ReactElement';
 import classNames from 'classnames';
 
 
@@ -60,8 +59,7 @@ export function applyModifiers(props, scheme, deepLevel, component, currLevel = 
       if (
         modifiers.length &&
         (x.props && x.props.children) &&
-        (ReactElement.isValidElement(x.props.children) ||
-          Array.isArray(x.props.children)) &&
+        (React.isValidElement(x.props.children) || Array.isArray(x.props.children)) &&
         !x.props.noModifiers
       ) {
         modifiedProps.children = applyModifiers(props, scheme, deepLevel,

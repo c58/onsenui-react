@@ -130,8 +130,8 @@ class FlatNavigator extends Component {
 
   _shouldUpdatePage(idx) {
     return (
-      this.animateBetween[1] === idx &&
-      this.animateBetween[1] === this.animateBetween[0]
+      this.animateBetween[1] === idx ||
+      this.animateBetween[0] === idx
     );
   }
 
@@ -149,7 +149,7 @@ class FlatNavigator extends Component {
         {children.map((x, i) => {
           const reffedChild = React.cloneElement(x, {ref: i});
           return (
-            <div key={i} style={{visibility: this._isPageVisible(i) ? 'visible' : 'hidden'}}>
+            <div key={i} style={{display: this._isPageVisible(i) ? 'block' : 'none'}}>
               <StaticContainer shouldUpdate={this._shouldUpdatePage(i)}>
                 {reffedChild}
               </StaticContainer>
@@ -169,11 +169,11 @@ class FlatNavigator extends Component {
 export default class OnsNavigatorContext extends RouterContext {
   makeLocationWithPrevious() {
     const { history, location, routes, params, components } = this.props
-    const { pathname } = location;
+    const pathname = decodeURIComponent(location.pathname);
     const lastPath = routes[routes.length - 1].path;
     if (lastPath) {
       let { regexpSource, paramNames, tokens } = compilePattern(lastPath);
-      const match = pathname.match(new RegExp(regexpSource + '$', 'i'));
+      const match = pathname.match(new RegExp(regexpSource + '/?$', 'i'));
       location.prevPath = match && pathname.substr(0, match.index - 1);
     }
   }

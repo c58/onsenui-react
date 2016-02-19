@@ -53,6 +53,11 @@ export function _shouldFillStatusBar(element) {
  * methods.
  */
 export default class OnsPage extends React.Component {
+  static contextTypes = {
+    router: React.PropTypes.object,
+    location: React.PropTypes.object,
+  };
+
   _getToolbarElement() {
     return this.refs.toolbar;
   }
@@ -91,7 +96,7 @@ export default class OnsPage extends React.Component {
   }
 
   renderContent() {
-    throw new Error('`renderContent` is not implemented');
+    // do nothing by default
   }
 
   renderStatusFill() {
@@ -101,7 +106,7 @@ export default class OnsPage extends React.Component {
   }
 
   render() {
-    const content = this.renderContent();
+    const content = this.renderContent() || this.props.children;
 
     let topToolbar = this.renderToolbar();
     topToolbar = topToolbar && React.cloneElement(topToolbar,

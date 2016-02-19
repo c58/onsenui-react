@@ -45,36 +45,34 @@ export default class OnsToolbar extends React.Component {
     }
 
     // Map children with propper classes
-    let leftItem, centerItem, rightItem;
-    React.Children.map(this.props.children, (x) => {
-      if (x && x.props && x.props.className) {
-        const classes = x.props.className.split(' ');
-        if (classes[0] === 'left') {
-          leftItem = this._ensureToolbarPart(x, 'left');
-        } else if (classes[0] === 'right') {
-          rightItem = this._ensureToolbarPart(x, 'right');
-        } else if (classes[0] === 'center') {
-          centerItem = this._ensureToolbarPart(x, 'center',
-            'navigation-bar__title');
+    let children;
+    if (!this.props.raw) {
+      let leftItem, centerItem, rightItem;
+      React.Children.map(this.props.children, (x) => {
+        if (x && x.props && x.props.className) {
+          const classes = x.props.className.split(' ');
+          if (classes[0] === 'left') {
+            leftItem = this._ensureToolbarPart(x, 'left');
+          } else if (classes[0] === 'right') {
+            rightItem = this._ensureToolbarPart(x, 'right');
+          } else if (classes[0] === 'center') {
+            centerItem = this._ensureToolbarPart(x, 'center',
+              'navigation-bar__title');
+          }
         }
-      }
-    });
-
-    if (!centerItem) {
-      leftItem = null;
-      rightItem = null;
-      centerItem = (
-        <div className="center navigation-bar__center navigation-bar__title">
-          {this.props.children}
-        </div>
-      );
+      });
+      children = [
+        leftItem || <div className="left navigation-bar__left" />,
+        centerItem || <div className="left navigation-bar__center" />,
+        rightItem || <div className="right navigation-bar__right" />,
+      ];
+    } else {
+      children = this.props.children;
     }
 
     return applyModifiers(this.props, scheme, 1,
       <ons-toolbar {...this.props} class="navigation-bar" style={notInlineStile}>
-        {leftItem || <div className="left navigation-bar__left" />}
-        {centerItem}
-        {rightItem || <div className="right navigation-bar__right" />}
+        {children}
       </ons-toolbar>
     );
   }

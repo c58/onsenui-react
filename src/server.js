@@ -8,7 +8,7 @@ try {
 	const hostname = process.env.HOSTNAME || "localhost";
 	const port     = process.env.PORT || 8000;
 
-	app.use('/', express.static('static'));
+	app.use('/*', express.static('static'));
 
 	app.listen(port, () => {
 		console.info("==> ✅  Server is listening");

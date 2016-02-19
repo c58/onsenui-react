@@ -124,6 +124,16 @@ export default class OnsSplitter extends React.Component {
     return sideObj;
   }
 
+  _initSides() {
+    const { sides, content } = _decomposeChildren(this.props);
+    this.sides = sides;
+    this.content = content;
+
+    for (let k in this.sides) {
+      this.sides[k] = this._createSideObject(k, this.sides[k]);
+    }
+  }
+
   _handleGesture = (event) => {
     for (let k in this.sides) {
       if (this.sides[k].swipeable) {
@@ -164,17 +174,11 @@ export default class OnsSplitter extends React.Component {
   }
 
   componentWillMount(props) {
-    const { sides, content } = _decomposeChildren(this.props);
-    this.sides = sides;
-    this.content = content;
-
-    for (let k in this.sides) {
-      this.sides[k] = this._createSideObject(k, this.sides[k]);
-    }
+    this._initSides();
   }
 
-  shouldComponentUpdate() {
-    return false;
+  componentWillReceiveProps() {
+    // TODO update sides (remove not existing and update dom elements)
   }
 
   render() {
