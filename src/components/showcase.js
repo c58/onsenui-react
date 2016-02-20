@@ -17,6 +17,7 @@ import OnsIcon from './onsen/ons-icon';
 import OnsToolbarButton from './onsen/ons-toolbar/button';
 import OnsButton from './onsen/ons-button';
 import OnsSwitch from './onsen/ons-switch';
+import OnsInput from './onsen/ons-input';
 
 /*
 class TestDialog extends OnsAlertDialog {
@@ -529,8 +530,12 @@ class EventSubjEditorPage extends OnsPage {
 				</OnsToolbar>
 				<OnsList>
 					{['Мат.ан', 'Мат экономика', 'Моделирование сплошных сред', 'Метеорология'].map((x, i) =>
-						<OnsListItem key={i} tappable onClick={() => router.push(location.prevPath)}>
-							<div className="center">{x}</div>
+						<OnsListItem key={i} tappable>
+							<div className="left">
+								<OnsInput modifier="noborder" id={`usr_${i}`} type="radio-button"
+									name="selected_subj_id" />
+							</div>
+							<label className="center" htmlFor={`usr_${i}`}>{x}</label>
 						</OnsListItem>
 					)}
 				</OnsList>
@@ -573,8 +578,11 @@ class EventPlaceEditorPage extends OnsPage {
 				</OnsToolbar>
 				<OnsList>
 					{['632', '625', '659', '354'].map((x, i) =>
-						<OnsListItem key={i} tappable onClick={() => router.push(location.prevPath)}>
-							<div className="center">{x}</div>
+						<OnsListItem key={i} tappable>
+							<div className="left">
+								<OnsInput modifier="noborder" id={`usr_${i}`} type="checkbox" />
+							</div>
+							<label className="center" htmlFor={`usr_${i}`}>{x}</label>
 						</OnsListItem>
 					)}
 				</OnsList>
@@ -617,12 +625,11 @@ class EventUserEditorPage extends OnsPage {
 				</OnsToolbar>
 				<OnsList>
 					{['Василий Петрович', 'Анастасия Федоровна'].map((x, i) =>
-						<OnsListItem key={i} tappable onClick={() => router.push(location.prevPath)}>
-							<label className="checkbox checkbox--noborder checkbox--list-item">
-		            <input className="checkbox__input checkbox--noborder__input" type="checkbox" checked="checked" />
-		            <div className="checkbox__checkmark checkbox--noborder__checkmark checkbox--list-item__checkmark" />
-		            {x}
-		          </label>
+						<OnsListItem key={i} tappable>
+							<div className="left">
+								<OnsInput modifier="noborder" id={`usr_${i}`} type="checkbox" />
+							</div>
+							<label className="center" htmlFor={`usr_${i}`}>{x}</label>
 						</OnsListItem>
 					)}
 				</OnsList>
@@ -636,7 +643,55 @@ class EventUserEditorPage extends OnsPage {
 	}
 }
 
-class EventGroupEditorPage extends OnsPage { }
+class EventGroupEditorPage extends OnsPage {
+	renderToolbar() {
+		const { router } = this.context;
+		return (
+			<OnsToolbar>
+				<div className="left"><OnsBackButton /></div>
+				<div className="center">Группы</div>
+				<div className="right">
+					<OnsToolbarButton>
+						<OnsIcon icon="ion-plus" size="25px" />
+					</OnsToolbarButton>
+				</div>
+			</OnsToolbar>
+		);
+	}
+
+	renderContent() {
+		const { router, location } = this.context;
+		const { pathname } = location;
+		return (
+			<div>
+				<OnsToolbar inline raw>
+					<div className="navigation-bar__center">
+						<input type="search" className="search-input" style={{width: '96%', margin: '6px auto 6px auto'}} placeholder="Поиск" />
+					</div>
+				</OnsToolbar>
+				<OnsList>
+					{['ФИИТ-1', 'МГФТ-2'].map((x, i) =>
+						<OnsListItem key={i} tappable>
+							<div className="left">
+								<OnsInput modifier="noborder" id={`usr_${i}`} type="checkbox" />
+							</div>
+							<label className="center" htmlFor={`usr_${i}`}>{x}</label>
+						</OnsListItem>
+					)}
+				</OnsList>
+				<div className="content-padded">
+					<OnsButton modifier="large--cta">
+						Добавить группу
+					</OnsButton>
+				</div>
+			</div>
+		);
+	}
+}
+
+class EventDowEditorPage extends OnsPage {
+
+}
 
 
 class CreateUniversityPage extends OnsPage { }
@@ -651,7 +706,6 @@ class SettingsPage extends OnsPage { }
 class SelectUniversityPage extends OnsPage { }
 class SelectFacultyPage extends OnsPage { }
 class SelectGroupPage extends OnsPage { }
-class EventDowEditorPage extends OnsPage { }
 class EventTimeStartEditorPage extends OnsPage { }
 class EventTimeEndEditorPage extends OnsPage { }
 class EventDateEditorPage extends OnsPage { }

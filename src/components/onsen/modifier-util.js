@@ -43,7 +43,7 @@ export function applyModifiers(props, scheme, deepLevel, component, currLevel = 
   const modifiers = modifiersStr.split(' ').filter(x => x);
 
   const res = React.Children.map(component, (x) => {
-    if (x) {
+    if (React.isValidElement(x)) {
       const modifiedProps = {};
 
       let classField = 'className';
@@ -67,6 +67,8 @@ export function applyModifiers(props, scheme, deepLevel, component, currLevel = 
       }
 
       return React.cloneElement(x, modifiedProps);
+    } else {
+      return x;
     }
   });
 

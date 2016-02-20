@@ -93,13 +93,13 @@ export default class OnsListItem extends React.Component {
 
   _ensureListPart(el, name) {
     const newClassName = classNames(el.props.className, `list__item__${name}`);
-    return React.cloneElement(el, {className: newClassName})
+    return React.cloneElement(el, { className: newClassName, key: name })
   }
 
-  render() {
-    // Map children with propper classes
+  _prepareChildren() {
     let leftItem, centerItem, rightItem;
-    React.Children.map(this.props.children, (x) => {
+
+    React.Children.map(this.props.children, (x, i) => {
       if (x && x.props && x.props.className) {
         const classes = x.props.className.split(' ');
         if (classes[0] === 'left') {
@@ -113,8 +113,6 @@ export default class OnsListItem extends React.Component {
     });
 
     if (!centerItem) {
-      leftItem = null;
-      rightItem = null;
       centerItem = (
         <div className="center list__item__center">
           {this.props.children}
@@ -122,11 +120,20 @@ export default class OnsListItem extends React.Component {
       );
     }
 
+    if (centerItem || leftItem || rightItem) {
+      leftItem = leftItem || <div className="left list__item__left" />;
+      centerItem = centerItem || <div className="center list__item__center" />;
+      rightItem = rightItem || <div className="right list__item__right" />;
+    }
+
+    return [leftItem, centerItem, rightItem];
+  }
+
+  render() {
     return applyModifiers(this.props, scheme, 2,
-      <ons-list-item {...this.props} class="list__item" ref={(d) => this._itemDOM = d}>
-      {leftItem || <div className="left list__item__left" />}
-      {centerItem}
-      {rightItem || <div className="right list__item__right" />}
+      <ons-list-item {...this.props} class="list__item"
+        ref={(d) => this._itemDOM = d}>
+        {this._prepareChildren()}
       </ons-list-item>
     );
   }
