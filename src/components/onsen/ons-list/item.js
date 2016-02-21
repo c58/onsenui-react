@@ -120,7 +120,7 @@ export default class OnsListItem extends React.Component {
       );
     }
 
-    if (centerItem || leftItem || rightItem) {
+    if ((centerItem || leftItem || rightItem) && !this.props.noAutofill) {
       leftItem = leftItem || <div key="left" className="left list__item__left" />;
       centerItem = centerItem || <div key="center" className="center list__item__center" />;
       rightItem = rightItem || <div key="right" className="right list__item__right" />;
