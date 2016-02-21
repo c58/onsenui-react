@@ -19,111 +19,8 @@ import OnsButton from './onsen/ons-button';
 import OnsSwitch from './onsen/ons-switch';
 import OnsInput from './onsen/ons-input';
 
-/*
-class TestDialog extends OnsAlertDialog {
 
-renderContent() {
-return (
-<div>
-<div className="alert-dialog-title">Warning!</div>
-<div className="alert-dialog-content">
-An error has occurred!
-</div>
-<div className="alert-dialog-footer">
-<button className="alert-dialog-button"
-onClick={this.close}>OK</button>
-<button className="alert-dialog-button"
-onClick={() => OnsAlertDialog.show(TestDialog)}>Push another when closed</button>
-</div>
-</div>
-);
-}
-}
-
-
-class PageA extends OnsPage {
-static contextTypes = {
-router: React.PropTypes.object,
-};
-
-renderToolbar() {
-return (
-<OnsToolbar>
-<div className="center">Title</div>
-<div className="right"><OnsToolbarButton><OnsIcon icon="ion-navicon" size="30px" /></OnsToolbarButton></div>
-</OnsToolbar>
-);
-}
-
-renderContent() {
-return (
-<div>
-<OnsCarousel swipeable overscrollable autoScroll fullscreen>
-<OnsCarouselItem>
-<OnsList>
-<OnsListHeader>Some header</OnsListHeader>
-<OnsListItem>
-<div className="center">Draggable switcher</div>
-<div className="right"><OnsSwitch /></div>
-</OnsListItem>
-<OnsListItem>
-Other controls coming soon...
-</OnsListItem>
-<OnsListItem>
-It is a fullscreen carousel. Swipe!
-</OnsListItem>
-<OnsListItem>
-There is also a sidebar. Swipe from left edge
-</OnsListItem>
-</OnsList>
-</OnsCarouselItem>
-<OnsCarouselItem>
-<OnsList>
-<OnsListItem tappable modifier="chevron" onClick={() => this.context.router.push('/test')}>
-<div className="list__item__title">Go to /test</div>
-</OnsListItem>
-<OnsListItem tappable modifier="chevron" onClick={() => OnsAlertDialog.show(TestDialog)}>
-<div className="list__item__title">Open "Warning!" alert</div>
-</OnsListItem>
-</OnsList>
-</OnsCarouselItem>
-<OnsCarouselItem style={{backgroundColor: 'green'}}>
-<div className="content-padded">
-Another page with button and green bg
-<OnsButton modifier="large--cta">I'm a button</OnsButton>
-</div>
-</OnsCarouselItem>
-</OnsCarousel>
-</div>
-);
-}
-}
-
-class PageB extends OnsPage {
-renderToolbar() {
-return (
-<OnsToolbar>
-<div className="left"><OnsBackButton>Назад</OnsBackButton></div>
-<div className="center">Other toolbar</div>
-</OnsToolbar>
-);
-}
-
-renderContent() {
-return (
-<div className="content-padded">
-Another page.
-Navigation uses Browser Histor. So, just "back" in a browser to return ;)
-</div>
-);
-}
-}*/
-
-
-//////////////////////////////////////////////////////
 let _autorized = true;
-
-
 
 class AppMain extends React.Component {
   renderAuthorized() {
@@ -834,57 +731,58 @@ class SelectGroupPage extends OnsPage { }
 
 module.exports = (
   <Router history={browserHistory} render={props => <OnsNavigatorContext {...props}/>}>
-  <Route path="/" component={AppMain}>
-  <Route path="/login" component={LoginPage} />
+    <Route path="/" component={AppMain}>
+      <Route path="/login" component={LoginPage} />
 
-  <Route path="/settings" component={SettingsPage}>
-  <Route path="select/group" component={SelectUniversityPage} flat>
-  <Route path="create" component={CreateUniversityPage} />
-  <Route path=":uniId" component={SelectFacultyPage}>
-  <Route path="create" component={CreateFacultyPage} />
-  <Route path=":facultyId" component={SelectGroupPage}>
-  <Route path="create" component={CreateGroupPage} />
-  </Route>
-  </Route>
-  </Route>
-  </Route>
+      <Route path="/settings" component={SettingsPage} flat>
+        <Route path="select/group" component={SelectUniversityPage}>
+          <Route path="create" component={CreateUniversityPage} />
+          <Route path=":uniId" component={SelectFacultyPage}>
+            <Route path="create" component={CreateFacultyPage} />
+            <Route path=":facultyId" component={SelectGroupPage}>
+              <Route path="create" component={CreateGroupPage} />
+            </Route>
+          </Route>
+        </Route>
+      </Route>
 
-  <Route path="/select/group" component={SelectUniversityPage} flat>
-  <Route path="create" component={CreateUniversityPage} />
-  <Route path=":uniId" component={SelectFacultyPage}>
-  <Route path="create" component={CreateFacultyPage} />
-  <Route path=":facultyId" component={SelectGroupPage}>
-  <Route path="create" component={CreateGroupPage} />
-  </Route>
-  </Route>
-  </Route>
+      <Route path="/select/group" component={SelectUniversityPage} flat>
+        <Route path="create" component={CreateUniversityPage} />
+        <Route path=":uniId" component={SelectFacultyPage}>
+          <Route path="create" component={CreateFacultyPage} />
+          <Route path=":facultyId" component={SelectGroupPage}>
+            <Route path="create" component={CreateGroupPage} />
+          </Route>
+        </Route>
+      </Route>
 
-  <Route path="/timetable(/group/:groupId)" component={TimetablePage} flat>
-  <Route path="info" component={GroupDetailsPage} />
-  <Route path="event/:eventId" component={EventDetailsPage}>
-  <Route path="edit" component={EventEditorPage}>
-  <Route path="type" component={EventTypeEditorPage} />
-  <Route path="subject" component={EventSubjEditorPage}>
-  <Route path="create" component={CreateSubjectPage} />
-  </Route>
-  <Route path="place" component={EventPlaceEditorPage}>
-  <Route path="create" component={CreatePlacePage} />
-  </Route>
-  <Route path="user" component={EventUserEditorPage}>
-  <Route path="create" component={CreateUserPage} />
-  </Route>
-  <Route path="group" component={EventGroupEditorPage}>
-  <Route path="create" component={CreateGroupPage} />
-  </Route>
-  <Route path="dow" component={EventDowEditorPage} />
-  <Route path="time/start" component={EventTimeStartEditorPage} />
-  <Route path="time/end" component={EventTimeEndEditorPage} />
-  <Route path="date" component={EventDateEditorPage} />
-  <Route path="repeat" component={EventRepeatEditorPage} />
-  <Route path="group-part" component={EventGroupPartEditorPage} />
-  </Route>
-  </Route>
-  </Route>
-  </Route>
+      <Route path="/timetable(/group/:groupId)" component={TimetablePage} flat>
+        <Route path="info" component={GroupDetailsPage} />
+        <Route path="event/:eventId" component={EventDetailsPage}>
+          <Route path="edit" component={EventEditorPage}>
+            <Route path="type" component={EventTypeEditorPage} />
+            <Route path="subject" component={EventSubjEditorPage}>
+              <Route path="create" component={CreateSubjectPage} />
+            </Route>
+            <Route path="place" component={EventPlaceEditorPage}>
+              <Route path="create" component={CreatePlacePage} />
+            </Route>
+            <Route path="user" component={EventUserEditorPage}>
+              <Route path="create" component={CreateUserPage} />
+            </Route>
+            <Route path="group" component={EventGroupEditorPage}>
+              <Route path="create" component={CreateGroupPage} />
+            </Route>
+
+            <Route path="dow" component={EventDowEditorPage} />
+            <Route path="time/start" component={EventTimeStartEditorPage} />
+            <Route path="time/end" component={EventTimeEndEditorPage} />
+            <Route path="date" component={EventDateEditorPage} />
+            <Route path="repeat" component={EventRepeatEditorPage} />
+            <Route path="group-part" component={EventGroupPartEditorPage} />
+          </Route>
+        </Route>
+      </Route>
+    </Route>
   </Router>
 );
