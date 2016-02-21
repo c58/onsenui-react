@@ -115,7 +115,7 @@ class FlatNavigator extends Component {
         prevChildren.slice(nextChildren.length)
       );
     }
-
+    
     this.setState({ children: nextChildren });
     this.forceUpdate();
   }

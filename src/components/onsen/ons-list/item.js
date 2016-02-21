@@ -69,7 +69,7 @@ export default class OnsListItem extends React.Component {
         this._untapTimer = setTimeout(this._disableTapHighlight,
           this.props.highlighOutDelay);
       } else if (e.gesture) {
-        if (e.gesture.distance > 7) {
+        if (e.gesture.distance > 9) {
           this._startEvent = null;
           this._tapCanceled = true;
           this._disableTapHighlight();

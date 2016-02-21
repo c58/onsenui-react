@@ -1,5 +1,5 @@
 import React from "react";
-import {Router, Route, browserHistory, Link} from "react-router";
+import {Router, Route, browserHistory, Link, IndexRedirect} from "react-router";
 import OnsNavigatorContext from './onsen/ons-navigator';
 import OnsToolbar from './onsen/ons-toolbar';
 import OnsPage from './onsen/ons-page';
@@ -162,6 +162,7 @@ class GroupDetailsPage extends OnsPage {
 
   renderToolbar() {
     const { router } = this.context;
+    const { pathname } = this.context.location;
     return (
       <OnsToolbar>
         <div className="left"><OnsBackButton /></div>
@@ -732,6 +733,8 @@ class SelectGroupPage extends OnsPage { }
 module.exports = (
   <Router history={browserHistory} render={props => <OnsNavigatorContext {...props}/>}>
     <Route path="/" component={AppMain}>
+      <IndexRedirect to="/timetable" />
+
       <Route path="/login" component={LoginPage} />
 
       <Route path="/settings" component={SettingsPage} flat>

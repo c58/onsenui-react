@@ -170,6 +170,8 @@ export default class OnsSplitter extends React.Component {
   }
 
   componentWillUnmount() {
+    this._gestureDetector.off('dragstart dragleft dragright dragend',
+      this._handleGesture);
     this._gestureDetector.dispose();
   }
 
