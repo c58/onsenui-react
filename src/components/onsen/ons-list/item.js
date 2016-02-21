@@ -37,6 +37,7 @@ export default class OnsListItem extends React.Component {
     this._gestureDetector = new GestureDetector(this._itemDOM,
       {dragMinDistance: 1});
     this._gestureDetector.on('touchstart mousedown', this._handleTapStart);
+    this._gestureDetector.on('click tap', this._handleStoppedClick);
     this._gestureDetector.on('drag dragleft dragright dragup dragdown swipe ' +
       'swipeleft swiperight swipeup swipedown dragend mouseup touchend ' +
       'touchcancel', this._handleTapEnd);
@@ -44,9 +45,10 @@ export default class OnsListItem extends React.Component {
 
   componentWillUnmount() {
     this._gestureDetector.off('touchstart mousedown', this._handleTapStart);
+    this._gestureDetector.off('click tap', this._handleStoppedClick);
     this._gestureDetector.off('drag dragleft dragright dragup dragdown swipe ' +
-      'swipeleft swiperight swipeup swipedown dragend mouseup touchend ' +
-      'touchcancel', this._handleTapEnd);
+      'swipeleft swiperight swipeup swipedown dragend mouseup touchend click ' +
+      'touchcancel tap', this._handleTapEnd);
     this._gestureDetector.dispose();
   }
 
@@ -74,6 +76,13 @@ export default class OnsListItem extends React.Component {
           clearTimeout(this._tapTimer);
         }
       }
+    }
+  }
+
+  _handleStoppedClick = (e) => {
+    if(this._tapCanceled) {
+      e.preventDefault();
+      e.stopPropagation();
     }
   }
 
