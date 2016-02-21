@@ -114,16 +114,16 @@ export default class OnsListItem extends React.Component {
 
     if (!centerItem) {
       centerItem = (
-        <div className="center list__item__center">
+        <div key="center" className="center list__item__center">
           {this.props.children}
         </div>
       );
     }
 
     if (centerItem || leftItem || rightItem) {
-      leftItem = leftItem || <div className="left list__item__left" />;
-      centerItem = centerItem || <div className="center list__item__center" />;
-      rightItem = rightItem || <div className="right list__item__right" />;
+      leftItem = leftItem || <div key="left" className="left list__item__left" />;
+      centerItem = centerItem || <div key="center" className="center list__item__center" />;
+      rightItem = rightItem || <div key="right" className="right list__item__right" />;
     }
 
     return [leftItem, centerItem, rightItem];
